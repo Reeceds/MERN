@@ -23,7 +23,7 @@ app.post('/api/login', async (req, res) => {
                 name: user.name,
                 email: user.email,
             }, 'secret123');
-            console.log('reece', token.email)
+            console.log('user token:', token)
 
         return res.json({ status: 'ok', user: token });
 

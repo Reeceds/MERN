@@ -8,6 +8,7 @@ app.post('/api/register', async (req, res) => {
 
     try {
 
+        // Hashes (encrypts) the password in the database 
         const newPassword = await bcrypt.hash(req.body.password, 10);
 
         await User.create({
