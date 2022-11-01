@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import jwtDecode from 'jwt-decode'
 import { useNavigate } from 'react-router-dom';
 
+import { Container } from "react-bootstrap";
+
 const Dashboard = () => {
 
     const navigate = useNavigate();
@@ -90,13 +92,15 @@ const Dashboard = () => {
 
     return (
         
-        <div>
-            <h1>Your quote: {quote || 'no quote found'}</h1>
-            <form onSubmit={updateQuote}>
-                <input type='text' palceholder='Quote' value={newQuote} onChange={e => setNewQuote(e.target.value)} />
-                <input type='submit' value='Update quote' />
-            </form>
-        </div>
+        <Container>
+            <div>
+                <h1>Your quote: {quote || 'no quote found'}</h1>
+                <form onSubmit={updateQuote}>
+                    <input type='text' palceholder='Quote' value={newQuote} onChange={e => setNewQuote(e.target.value)} />
+                    <input type='submit' value='Update quote' />
+                </form>
+            </div>
+        </Container>
     )
 
 }

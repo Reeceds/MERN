@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
+import { Container } from "react-bootstrap";
 
 function Register() {
 
@@ -35,15 +38,18 @@ function Register() {
 
     
     return (
-        <div className="">
-            <h1>Register</h1>
-            <form onSubmit={registerUser}>
-                <input type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
-                <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-                <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-                <input type="submit" value="Register"/>
-            </form>
-        </div>
+        <Container>
+            <div className="">
+                <h1>Register</h1>
+                <form onSubmit={registerUser}>
+                    <input type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
+                    <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+                    <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                    <input type="submit" value="Register"/>
+                </form>
+                <p>Already have an account, please <Link to="/login">click here to log in</Link></p>
+            </div>
+        </Container>
     );
 }
 

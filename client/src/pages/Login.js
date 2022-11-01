@@ -1,5 +1,9 @@
 import { useState } from 'react';
 
+import { Link } from "react-router-dom";
+
+import { Container } from "react-bootstrap";
+
 function Login() {
 
     const [email, setEmail] = useState('')
@@ -34,14 +38,17 @@ function Login() {
 
     
     return (
-        <div className="">
-            <h1>Login</h1>
-            <form onSubmit={loginUser}>
-                <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-                <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-                <input type="submit" value="Login"/>
-            </form>
-        </div>
+        <Container>
+            <div className="">
+                <h1>Login</h1>
+                <form onSubmit={loginUser}>
+                    <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+                    <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                    <input type="submit" value="Login"/>
+                </form>
+                <p>If you do not have an account, please <Link to="/register">click here to register</Link></p>
+            </div>
+        </Container>
     );
 }
 
