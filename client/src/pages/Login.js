@@ -23,7 +23,7 @@ function Login() {
         const data = await response.json();
 
         if(data.user){
-            localStorage.setItem('token', data.user)
+            localStorage.setItem('user-token', data.user)
             alert('Login successful')
             window.location.href = '/dashboard'
         } else {

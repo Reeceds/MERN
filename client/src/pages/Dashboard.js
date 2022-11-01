@@ -12,17 +12,20 @@ const Dashboard = () => {
 
     useEffect(() => {
       
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('user-token');
         
         if(token){
             const user = jwtDecode(token);
 
             if(!user){
-                localStorage.removeItem('token');
+                localStorage.removeItem('user-token');
                 navigate('/login');
             } else {
                 populateQuote()
             }
+        } else {
+
+            navigate('/login');
         }
 
     }, []);
@@ -32,7 +35,7 @@ const Dashboard = () => {
 
         const req = await fetch('http://localhost:8080/api/quote', {
             headers: {
-                'x-access-token': localStorage.getItem('token'),
+                'x-access-token': localStorage.getItem('user-token'),
             },
         });
 
@@ -52,26 +55,35 @@ const Dashboard = () => {
         
         e.preventDefault();
 
-        const req = await fetch('http://localhost:8080/api/quote', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-access-token': localStorage.getItem('token'),
-            },
-            body: JSON.stringify({
-                quote: newQuote,
-            }),
-        });
+        const token = localStorage.getItem('user-token');
+        
+        if(token){ 
 
-        const data = await req.json();
-        console.log(data)
-
-        if(data.status === 'ok'){
-            setNewQuote('')
-            setQuote(newQuote)
+            const req = await fetch('http://localhost:8080/api/quote', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': localStorage.getItem('user-token'),
+                },
+                body: JSON.stringify({
+                    quote: newQuote,
+                }),
+            });
+    
+            const data = await req.json();
+            console.log(data)
+    
+            if(data.status === 'ok'){
+                setNewQuote('')
+                setQuote(newQuote)
+            } else {
+                alert(data.error)
+            }
         } else {
-            alert(data.error)
+
+            navigate('/login');
         }
+
 
     };
 
