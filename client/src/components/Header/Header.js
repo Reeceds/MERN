@@ -1,29 +1,28 @@
 import { React } from "react";
 import { useState, useEffect } from "react";
 import "./Header.scss";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
-
 import { Container } from "react-bootstrap";
-
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth, useAuthUpdate } from '../../context/AuthContext';
 
 export default function Header() {
-    let [auth, setAuth] = useState(false)
+    const auth = useAuth();
+    const toggleAuth = useAuthUpdate();
     let [burgerBtn, setBurgerBtn] = useState(faBars);
 
     let navigate = useNavigate();
 
     useEffect(() => {
-      localStorage.getItem('user-token') ? setAuth(true) : setAuth(false)
+      localStorage.getItem('user-token') ? toggleAuth(true) : toggleAuth(false)
     }, [auth])
     
 
     // Logs out user
     const logOutUser = () => {
 
-        setAuth(false)
+        toggleAuth(false)
         localStorage.removeItem('user-token');
         closeMobileNav();
         navigate('/login');

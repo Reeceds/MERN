@@ -1,14 +1,14 @@
 import { useState } from 'react';
-
 import { Link } from "react-router-dom";
-
 import { Container } from "react-bootstrap";
+import { useAuth, useAuthUpdate } from '../context/AuthContext';
 
 function Login() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
+    const auth = useAuth();
+    const toggleAuth = useAuthUpdate();
 
     async function loginUser(e){
         e.preventDefault();
@@ -27,6 +27,7 @@ function Login() {
         const data = await response.json();
 
         if(data.user){
+            toggleAuth(true);
             localStorage.setItem('user-token', data.user)
             alert('Login successful')
             window.location.href = '/dashboard'
