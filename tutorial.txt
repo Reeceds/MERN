@@ -1,1 +1,7 @@
 https://www.youtube.com/watch?v=Ejg7es3ba2k&ab_channel=codedamn
+
+// Start Mongodb Community server with terminal command
+brew services start mongodb-community
+
+// Stop Mongodb Community server with terminal command
+brew services stop mongodb-community
