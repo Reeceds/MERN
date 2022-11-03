@@ -1,14 +1,11 @@
-const express = require('express')
-const app = express()
-const User = require('../models/user.model')
-const bcrypt = require('bcryptjs')
+const express = require("express");
+const app = express();
+const User = require("../models/user.model");
+const bcrypt = require("bcryptjs");
 
-
-app.post('/api/register', async (req, res) => {
-
+app.post("/api/register", async (req, res) => {
     try {
-
-        // Hashes (encrypts) the password in the database 
+        // Hashes (encrypts) the password in the database
         const newPassword = await bcrypt.hash(req.body.password, 10);
 
         await User.create({
@@ -17,15 +14,11 @@ app.post('/api/register', async (req, res) => {
             password: newPassword,
         });
 
-        res.json({ status: 'ok' });
-
-    } catch(err) {
-
-        console.log(err)
-        res.json({ status: 'error', error: 'Duplicate email' });
+        res.json({ status: "ok" });
+    } catch (err) {
+        console.log(err);
+        res.json({ status: "error", error: "Duplicate email" });
     }
-
 });
 
-
-module.exports = app
+module.exports = app;

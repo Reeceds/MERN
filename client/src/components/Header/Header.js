@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth, useAuthUpdate } from '../../context/AuthContext';
+import { useAuth, useAuthUpdate } from "../../context/AuthContext";
 
 export default function Header() {
     const auth = useAuth();
@@ -15,17 +15,15 @@ export default function Header() {
     let navigate = useNavigate();
 
     useEffect(() => {
-      localStorage.getItem('user-token') ? toggleAuth(true) : toggleAuth(false)
-    }, [auth])
-    
+        localStorage.getItem("user-token") ? toggleAuth(true) : toggleAuth(false);
+    }, [auth]);
 
     // Logs out user
     const logOutUser = () => {
-
-        toggleAuth(false)
-        localStorage.removeItem('user-token');
+        toggleAuth(false);
+        localStorage.removeItem("user-token");
         closeMobileNav();
-        navigate('/login');
+        navigate("/login");
     };
 
     // Toggle mobile nav
@@ -68,14 +66,15 @@ export default function Header() {
             <div className="main-nav_desktop">
                 <Container>
                     <div className=" main-nav_desktop-container">
-                        {auth ?
-                        <Link onClick={() => closeMobileNav()} className="main-nav_desktop-logo" to="/dashboard">
-                            MERN
-                        </Link>
-                        :
-                        <Link onClick={() => closeMobileNav()} className="main-nav_desktop-logo" to="/login">
-                            MERN
-                        </Link>}
+                        {auth ? (
+                            <Link onClick={() => closeMobileNav()} className="main-nav_desktop-logo" to="/dashboard">
+                                MERN
+                            </Link>
+                        ) : (
+                            <Link onClick={() => closeMobileNav()} className="main-nav_desktop-logo" to="/login">
+                                MERN
+                            </Link>
+                        )}
                         {auth ? (
                             <nav>
                                 <Link to="/dashboard">Dashboard</Link>

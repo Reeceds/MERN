@@ -1,108 +1,95 @@
-import React, { useEffect, useState } from 'react'
-import jwtDecode from 'jwt-decode'
-import { useNavigate } from 'react-router-dom';
-
+import React, { useEffect, useState } from "react";
+import jwtDecode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 const Dashboard = () => {
-
     const navigate = useNavigate();
 
-    const [quote, setQuote] = useState('')
-    const [newQuote, setNewQuote] = useState('')
-
+    const [quote, setQuote] = useState("");
+    const [newQuote, setNewQuote] = useState("");
 
     useEffect(() => {
-      
-        const token = localStorage.getItem('user-token');
-        
-        if(token){
+        const token = localStorage.getItem("user-token");
+
+        if (token) {
             const user = jwtDecode(token);
 
-            if(!user){
-                localStorage.removeItem('user-token');
-                navigate('/login');
+            if (!user) {
+                localStorage.removeItem("user-token");
+                navigate("/login");
             } else {
-                populateQuote()
+                populateQuote();
             }
         } else {
-
-            navigate('/login');
+            navigate("/login");
         }
-
     }, []);
 
-
-    async function populateQuote(){
-
-        const req = await fetch('http://localhost:8080/api/quote', {
+    async function populateQuote() {
+        const req = await fetch("http://localhost:8080/api/quote", {
             headers: {
-                'x-access-token': localStorage.getItem('user-token'),
+                "x-access-token": localStorage.getItem("user-token"),
             },
         });
 
         const data = await req.json();
-        console.log(data)
+        console.log(data);
 
-        if(data.status === 'ok'){
-            setQuote(data.quote)
+        if (data.status === "ok") {
+            setQuote(data.quote);
         } else {
-            alert(data.error)
+            alert(data.error);
         }
+    }
 
-    };
-    
-    
-    async function updateQuote(e){
-        
+    async function updateQuote(e) {
         e.preventDefault();
 
-        const token = localStorage.getItem('user-token');
-        
-        if(token){ 
+        const token = localStorage.getItem("user-token");
 
-            const req = await fetch('http://localhost:8080/api/quote', {
-                method: 'POST',
+        if (token) {
+            const req = await fetch("http://localhost:8080/api/quote", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'x-access-token': localStorage.getItem('user-token'),
+                    "Content-Type": "application/json",
+                    "x-access-token": localStorage.getItem("user-token"),
                 },
                 body: JSON.stringify({
                     quote: newQuote,
                 }),
             });
-    
+
             const data = await req.json();
-            console.log(data)
-    
-            if(data.status === 'ok'){
-                setNewQuote('')
-                setQuote(newQuote)
+            console.log(data);
+
+            if (data.status === "ok") {
+                setNewQuote("");
+                setQuote(newQuote);
             } else {
-                alert(data.error)
+                alert(data.error);
             }
         } else {
-
-            navigate('/login');
+            navigate("/login");
         }
-
-
-    };
-
+    }
 
     return (
-        
         <Container>
             <div>
-                <h1>Your quote: {quote || 'no quote found'}</h1>
+                <h1>Your quote: {quote || "no quote found"}</h1>
                 <form onSubmit={updateQuote}>
-                    <input type='text' palceholder='Quote' value={newQuote} onChange={e => setNewQuote(e.target.value)} />
-                    <input type='submit' value='Update quote' />
+                    <input
+                        type="text"
+                        palceholder="Quote"
+                        value={newQuote}
+                        onChange={(e) => setNewQuote(e.target.value)}
+                    />
+                    <input type="submit" value="Update quote" />
                 </form>
             </div>
         </Container>
-    )
+    );
+};
 
-}
-
-export default Dashboard
+export default Dashboard;
