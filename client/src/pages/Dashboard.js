@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 const Dashboard = () => {
-    const navigate = useNavigate();
-
     const [quote, setQuote] = useState("");
     const [newQuote, setNewQuote] = useState("");
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem("user-token");

@@ -3,19 +3,20 @@
 .main-nav {
     &_desktop {
         background-color: #19356e;
-        border-bottom: 4px solid #122750;
+        border-bottom: 1px solid #122750;
 
         &-container {
             display: flex;
-            justify-content: space-between;
             padding-top: 1.1rem;
             padding-bottom: 1.1rem;
+            align-items: center;
         }
 
         &-logo {
             color: #fff !important;
             text-decoration: none;
             font-weight: 500;
+            flex-grow: 1;
         }
 
         &-seperator {
@@ -25,6 +26,7 @@
         nav {
             display: flex;
             align-items: center;
+            margin-right: 20px;
 
             @include tablet {
                 display: none;
@@ -39,6 +41,11 @@
                 font-weight: 500;
                 font-size: 1rem;
             }
+        }
+
+        &-toggle {
+            cursor: pointer;
+            font-size: 1.25rem;
         }
     }
 
@@ -74,6 +81,7 @@
 
     @include tablet {
         display: flex;
+        margin-left: 20px;
     }
 }
 

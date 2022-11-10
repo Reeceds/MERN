@@ -18,3 +18,30 @@ form {
 input {
     margin-bottom: 10px;
 }
+
+body {
+    &.dark-mode {
+        background-color: #000;
+        color: #fff;
+
+        a,
+        span {
+            color: #fff;
+        }
+
+        .main-nav {
+            &_desktop {
+                background-color: #000 !important;
+                border-bottom: 1px solid #343434 !important;
+            }
+
+            &_mobile {
+                background-color: #1e1e1e;
+
+                nav a {
+                    color: #fff !important;
+                }
+            }
+        }
+    }
+}

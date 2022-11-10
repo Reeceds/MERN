@@ -2,7 +2,7 @@ import { React } from "react";
 import { useState, useEffect } from "react";
 import "./Header.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faXmark, faCircleHalfStroke } from "@fortawesome/free-solid-svg-icons";
 import { Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth, useAuthUpdate } from "../../context/AuthContext";
@@ -10,13 +10,33 @@ import { useAuth, useAuthUpdate } from "../../context/AuthContext";
 export default function Header() {
     const auth = useAuth();
     const toggleAuth = useAuthUpdate();
-    let [burgerBtn, setBurgerBtn] = useState(faBars);
+    const [toggleDarkMode, setToggleDarkMode] = useState(false);
+    const [burgerBtn, setBurgerBtn] = useState(faBars);
 
     let navigate = useNavigate();
 
     useEffect(() => {
         localStorage.getItem("user-token") ? toggleAuth(true) : toggleAuth(false);
     }, [auth]);
+
+    useEffect(() => {
+        if (localStorage.getItem("dark-mode")) {
+            setToggleDarkMode(true);
+            document.querySelector("body").classList.add("dark-mode");
+        } else {
+            setToggleDarkMode(false);
+            document.querySelector("body").classList.remove("dark-mode");
+        }
+    }, [toggleDarkMode]);
+
+    // Toggle dark/light mode
+    const toggleTheme = () => {
+        setToggleDarkMode((toggleDarkMode) => !toggleDarkMode);
+
+        localStorage.getItem("dark-mode")
+            ? localStorage.removeItem("dark-mode")
+            : localStorage.setItem("dark-mode", true);
+    };
 
     // Logs out user
     const logOutUser = () => {
@@ -65,7 +85,7 @@ export default function Header() {
             {/* Dektop nav */}
             <div className="main-nav_desktop">
                 <Container>
-                    <div className=" main-nav_desktop-container">
+                    <div className="main-nav_desktop-container">
                         {auth ? (
                             <Link onClick={() => closeMobileNav()} className="main-nav_desktop-logo" to="/dashboard">
                                 MERN
@@ -78,14 +98,23 @@ export default function Header() {
                         {auth ? (
                             <nav>
                                 <Link to="/dashboard">Dashboard</Link>
-                                <span className="main-nav_desktop-seperator">|</span>
                                 <span onClick={logOutUser}>Log Out</span>
+                                <span className="main-nav_desktop-seperator">|</span>
                             </nav>
                         ) : (
                             <nav>
                                 <Link to="/login">Log In / Register</Link>
+                                <span className="main-nav_desktop-seperator">|</span>
                             </nav>
                         )}
+
+                        <FontAwesomeIcon
+                            onClick={toggleTheme}
+                            className="js-main-nav_desktop-toggle main-nav_desktop-toggle"
+                            icon={faCircleHalfStroke}
+                            color="white"
+                            title="Light/Dark theme"
+                        />
                         <FontAwesomeIcon
                             onClick={() => toggleMobileNav()}
                             className="js-burger-menu-btn burger-menu-btn"
